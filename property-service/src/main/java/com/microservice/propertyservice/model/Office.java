@@ -25,7 +25,7 @@ public class Office implements Property {
     @Column(name = "complex_name")
     private String buildingComplexName;
 
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     @JoinColumn(name = "address_id")
     private Address address;
 

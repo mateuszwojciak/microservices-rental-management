@@ -22,7 +22,7 @@ public class Apartment implements Property {
     @Column(name = "name")
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     @JoinColumn(name = "address_id")
     private Address address;
 
