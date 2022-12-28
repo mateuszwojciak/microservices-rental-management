@@ -18,8 +18,8 @@ public class AddressService {
         return addressRepository.findAll();
     }
 
-    public List<Address> getSortAddressesForCountry(String country, Sort sort) {
-        return addressRepository.findAllByCountry(country, sort.by("id").ascending());
+    public List<Address> getAddressesForCountry(String country) {
+        return addressRepository.findAllByCountry(country, Sort.by("city").ascending());
     }
 
     public void deleteAddress(Long addressId) {

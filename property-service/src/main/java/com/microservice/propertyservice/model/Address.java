@@ -1,5 +1,6 @@
 package com.microservice.propertyservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.Setter;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -27,12 +28,15 @@ public class Address {
     private String country;
 
     @OneToOne(mappedBy = "address")
+    @JsonBackReference(value = "apartment-address")
     private Apartment apartment;
 
     @OneToOne(mappedBy = "address")
+    @JsonBackReference(value = "house-address")
     private House house;
 
     @OneToOne(mappedBy = "address")
+    @JsonBackReference(value = "office-address")
     private Office office;
 
     public Address(Long id, String streetAddress, String city, String country, Apartment apartment, House house, Office office) {

@@ -1,5 +1,6 @@
 package com.microservice.propertyservice.service;
 
+import com.microservice.propertyservice.exception.ResourceNotFoundException;
 import com.microservice.propertyservice.model.Apartment;
 import com.microservice.propertyservice.model.value_object.ResponseTemplateVO;
 import com.microservice.propertyservice.model.value_object.Tenant;
@@ -30,9 +31,12 @@ public class ApartmentService {
     public ResponseTemplateVO getApartmentWithTenant(Long apartmentId) {
         Apartment apartment = apartmentRepository.findById(apartmentId).orElse(null);
         ResponseTemplateVO vo = new ResponseTemplateVO();
+        Tenant tenant = new Tenant();
 
-        Tenant tenant = restTemplate.getForObject("http://localhost:8082/tenants/"
-                + apartment.getTenantId(), Tenant.class);
+        if (apartment != null) {
+            tenant = restTemplate.getForObject(
+                    "http://localhost:8082/tenants/info/" + apartment.getTenantId(), Tenant.class);
+        }
 
         vo.setTenant(tenant);
         vo.setProperty(apartment);

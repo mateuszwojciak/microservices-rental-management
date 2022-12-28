@@ -15,13 +15,21 @@ import java.util.List;
 @RequestMapping("offices")
 public class OfficeController {
 
-
     @Autowired
     private OfficeService officeService;
 
-    @GetMapping("/list-of-offices")
+    @GetMapping("/all")
     public List<Office> getAllOffices() {
         return officeService.getAllOffices();
+    }
+
+    @GetMapping("/info/{id}")
+    public ResponseTemplateVO getOfficeWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
+        ResponseTemplateVO office = officeService.getOfficeWithTenant(id);
+        if (office.getProperty() == null)
+            throw new ResourceNotFoundException("Office with id " + id + " not found.");
+
+        return office;
     }
 
     @PostMapping("/create")
@@ -31,15 +39,6 @@ public class OfficeController {
             throw new InvalidInputException("Name, capacity and square meters are required fields.");
         }
         officeService.createOffice(office);
-    }
-
-    @GetMapping("/info/{id}")
-    public ResponseTemplateVO getOfficeWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
-        ResponseTemplateVO office = officeService.getOfficeWithTenant(id);
-        if (office == null) throw new ResourceNotFoundException(
-                "Office with id " + id + " not found."
-        );
-        return office;
     }
 
     @PutMapping("/edit/{id}")

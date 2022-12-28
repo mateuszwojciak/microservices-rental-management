@@ -1,11 +1,9 @@
 package com.microservice.propertyservice.model.value_object;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Tenant {
     private String type;

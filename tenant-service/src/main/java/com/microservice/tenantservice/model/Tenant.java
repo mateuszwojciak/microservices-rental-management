@@ -1,9 +1,11 @@
 package com.microservice.tenantservice.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "tenants")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -30,6 +32,16 @@ public class Tenant {
     @Column(name = "phone")
     private String phone;
 
-   // @OneToMany(mappedBy = "tenant")
-   // private List<Rental> rentals;
+    @Column(name = "rent_agreement_id")
+    private String rentAgreementId;
+
+    public Tenant(Long id, String identificationNumber, String firstName, String lastName, String email, String phone, String rentAgreementId) {
+        this.id = id;
+        this.identificationNumber = identificationNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.rentAgreementId = rentAgreementId;
+    }
 }

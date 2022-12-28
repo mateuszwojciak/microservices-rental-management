@@ -1,4 +1,4 @@
-package com.microservice.propertyservice.exception;
+package com.microservice.tenantservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

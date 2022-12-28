@@ -17,7 +17,7 @@ public class AmenityController {
     @Autowired
     private AmenityService amenityService;
 
-    @GetMapping("/list-of-amenities")
+    @GetMapping("/all")
     public List<Amenity> getAllAmenities() {
         return amenityService.getAllAmenities();
     }

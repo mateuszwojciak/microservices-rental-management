@@ -3,6 +3,8 @@ package com.microservice.tenantservice.repository;
 import com.microservice.tenantservice.model.Tenant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TenantRepository extends JpaRepository<Tenant, Long> {
+import java.util.List;
 
+public interface TenantRepository extends JpaRepository<Tenant, Long> {
+    List<Tenant> findAllByFirstName(String firstName);
 }

@@ -31,9 +31,12 @@ public class HouseService {
     public ResponseTemplateVO getHouseWithTenant(Long houseId) {
         House house = houseRepository.findById(houseId).orElse(null);
         ResponseTemplateVO vo = new ResponseTemplateVO();
+        Tenant tenant = new Tenant();
 
-        Tenant tenant = restTemplate.getForObject("http://localhost:8082/tenants/"
-                + house.getTenantId(), Tenant.class);
+        if (house != null) {
+            tenant = restTemplate.getForObject(
+                    "http://localhost:8082/tenants/info/" + house.getTenantId(), Tenant.class);
+        }
 
         vo.setTenant(tenant);
         vo.setProperty(house);

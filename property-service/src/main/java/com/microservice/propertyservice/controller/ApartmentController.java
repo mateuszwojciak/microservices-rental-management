@@ -18,17 +18,17 @@ public class ApartmentController {
     @Autowired
     private ApartmentService apartmentService;
 
-    @GetMapping("/list-of-apartments")
+    @GetMapping("/all")
     public List<Apartment> getAllApartments() {
         return apartmentService.getAllApartments();
     }
 
     @GetMapping("/info/{id}")
-    public ResponseTemplateVO getApartmentWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
+    public ResponseTemplateVO getApartmentWithTenant(@PathVariable("id") Long id) {
         ResponseTemplateVO apartment = apartmentService.getApartmentWithTenant(id);
-        if (apartment == null) throw new ResourceNotFoundException (
-                "Apartment with id " + id + " not found."
-        );
+        if (apartment.getProperty() == null)
+            throw new ResourceNotFoundException("Apartment with id " + id + " not found.");
+
         return apartment;
     }
 
@@ -36,9 +36,9 @@ public class ApartmentController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createApartment(@RequestBody Apartment apartment) throws InvalidInputException {
         if (apartment.getName() == null || apartment.getFloor() == null
-        || apartment.getNumberOfRooms() == null || apartment.getSquareMeter() == null) {
+        || apartment.getNumberOfRooms() == null || apartment.getSquareMeter() == null)
             throw new InvalidInputException("Name, floor, number of rooms and square meters are required fields.");
-        }
+
         apartmentService.createApartment(apartment);
     }
 
@@ -46,9 +46,9 @@ public class ApartmentController {
     public void updateApartment(@PathVariable("id") Long id, @RequestBody Apartment apartment) throws InvalidInputException {
         apartment.setId(id);
         if (apartment.getName() == null || apartment.getFloor() == null
-                || apartment.getNumberOfRooms() == null || apartment.getSquareMeter() == null) {
+                || apartment.getNumberOfRooms() == null || apartment.getSquareMeter() == null)
             throw new InvalidInputException("Name, floor, number of bedrooms and square meters are required fields.");
-        }
+
         apartmentService.updateApartment(apartment);
     }
 

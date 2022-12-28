@@ -1,5 +1,7 @@
 package com.microservice.propertyservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ import java.util.Set;
 public class Office implements Property {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -27,6 +29,7 @@ public class Office implements Property {
 
     @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST } )
     @JoinColumn(name = "address_id")
+    @JsonManagedReference(value = "office-address")
     private Address address;
 
     @Column(name = "people_capacity")
@@ -46,6 +49,7 @@ public class Office implements Property {
             joinColumns = @JoinColumn(name = "office_id"),
             inverseJoinColumns = @JoinColumn(name = "amenity_id")
     )
+    @JsonIgnoreProperties
     private Set<Amenity> amenities;
 
     @Column(name = "tenant_id")

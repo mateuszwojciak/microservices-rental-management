@@ -30,9 +30,12 @@ public class OfficeService {
     public ResponseTemplateVO getOfficeWithTenant(Long officeId) {
         Office office = officeRepository.findById(officeId).orElse(null);
         ResponseTemplateVO vo = new ResponseTemplateVO();
+        Tenant tenant = new Tenant();
 
-        Tenant tenant = restTemplate.getForObject("http://localhost:8082/tenants/"
-                + office.getTenantId(), Tenant.class);
+        if (office != null) {
+            tenant = restTemplate.getForObject(
+                    "http://localhost:8082/tenants/info/" + office.getTenantId(), Tenant.class);
+        }
 
         vo.setTenant(tenant);
         vo.setProperty(office);

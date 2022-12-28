@@ -18,9 +18,18 @@ public class HouseController {
     @Autowired
     private HouseService houseService;
 
-    @GetMapping("/list-of-houses")
+    @GetMapping("/all")
     public List<House> getAllHouses() {
         return houseService.getAllHouses();
+    }
+
+    @GetMapping("/info/{id}")
+    public ResponseTemplateVO getHouseWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
+        ResponseTemplateVO house = houseService.getHouseWithTenant(id);
+        if (house.getProperty() == null)
+            throw new ResourceNotFoundException("House with id " + id + " not found.");
+
+        return house;
     }
 
     @PostMapping("/create")
@@ -30,15 +39,6 @@ public class HouseController {
             throw new InvalidInputException("Name, number of rooms and square meters are required fields.");
         }
         houseService.createHouse(house);
-    }
-
-    @GetMapping("/info/{id}")
-    public ResponseTemplateVO getHouseWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
-        ResponseTemplateVO house = houseService.getHouseWithTenant(id);
-        if (house == null) throw new ResourceNotFoundException(
-                "House with id " + id + " not found."
-        );
-        return house;
     }
 
     @PutMapping("/edit/{id}")
