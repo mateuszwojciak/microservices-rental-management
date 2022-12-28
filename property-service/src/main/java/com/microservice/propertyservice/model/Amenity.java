@@ -15,7 +15,7 @@ import java.util.Set;
 public class Amenity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -33,6 +33,7 @@ public class Amenity {
 
     @ManyToMany(mappedBy = "amenities")
     private Set<Office> officeSet;
+
 
     public Amenity(Long id, String name, String description, Set<Apartment> apartmentSet, Set<House> houseSet, Set<Office> officeSet) {
         this.id = id;

@@ -15,19 +15,19 @@ import java.util.Set;
 public class Apartment implements Property {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @Column(name = "number_bedrooms")
-    private Integer numberOfBedrooms;
+    @Column(name = "number_rooms")
+    private Integer numberOfRooms;
 
     @Column(name = "number_bathrooms")
     private Integer numberOfBathrooms;
@@ -41,21 +41,29 @@ public class Apartment implements Property {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToMany
-    @JoinTable(name = "apartment_amenities",
-    joinColumns = @JoinColumn(name = "apartment_id"),
-    inverseJoinColumns = @JoinColumn(name = "amenity_id"))
+    @ManyToMany(
+            cascade = { CascadeType.MERGE, CascadeType.PERSIST }
+    )
+    @JoinTable(
+            name = "apartment_amenities",
+            joinColumns = @JoinColumn(name = "apartment_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+    )
     private Set<Amenity> amenities;
 
-    public Apartment(Long id, String name, Address address, Integer numberOfBedrooms, Integer numberOfBathrooms, Integer floor, Integer squareMeter, Integer price, Set<Amenity> amenities) {
+    @Column(name = "tenant_id")
+    private Long tenantId;
+
+    public Apartment(Long id, String name, Address address, Integer numberOfRooms, Integer numberOfBathrooms, Integer floor, Integer squareMeter, Integer price, Set<Amenity> amenities, Long tenantId) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.numberOfBedrooms = numberOfBedrooms;
+        this.numberOfRooms = numberOfRooms;
         this.numberOfBathrooms = numberOfBathrooms;
         this.floor = floor;
         this.squareMeter = squareMeter;
         this.price = price;
         this.amenities = amenities;
+        this.tenantId = tenantId;
     }
 }

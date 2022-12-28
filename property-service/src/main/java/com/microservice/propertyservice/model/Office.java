@@ -15,7 +15,7 @@ import java.util.Set;
 public class Office implements Property {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -25,7 +25,7 @@ public class Office implements Property {
     @Column(name = "complex_name")
     private String buildingComplexName;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -38,13 +38,20 @@ public class Office implements Property {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToMany
-    @JoinTable(name = "office_amenities",
-    joinColumns = @JoinColumn(name = "office_id"),
-    inverseJoinColumns = @JoinColumn(name = "amenity_id"))
+    @ManyToMany(
+            cascade = { CascadeType.MERGE, CascadeType.PERSIST }
+    )
+    @JoinTable(
+            name = "office_amenities",
+            joinColumns = @JoinColumn(name = "office_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+    )
     private Set<Amenity> amenities;
 
-    public Office(Long id, String name, String buildingComplexName, Address address, Integer peopleCapacity, Integer squareMeter, Integer price, Set<Amenity> amenities) {
+    @Column(name = "tenant_id")
+    private Long tenantId;
+
+    public Office(Long id, String name, String buildingComplexName, Address address, Integer peopleCapacity, Integer squareMeter, Integer price, Set<Amenity> amenities, Long tenantId) {
         this.id = id;
         this.name = name;
         this.buildingComplexName = buildingComplexName;
@@ -53,5 +60,6 @@ public class Office implements Property {
         this.squareMeter = squareMeter;
         this.price = price;
         this.amenities = amenities;
+        this.tenantId = tenantId;
     }
 }
