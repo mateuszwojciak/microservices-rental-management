@@ -20,12 +20,10 @@ public class Rental {
     @Column(name = "rental_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "property_id")
+    @Column(name = "property_id")
     private String propertyId;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
+    @Column(name = "tenant_id")
     private String tenantId;
 
     @Column(name = "start_date")
