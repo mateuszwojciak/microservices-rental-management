@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("/apartments")
 public class ApartmentController {
 
+    private final ApartmentService apartmentService;
+
     @Autowired
-    private ApartmentService apartmentService;
+    public ApartmentController(ApartmentService apartmentService) {
+        this.apartmentService = apartmentService;
+    }
 
     @GetMapping("/all")
     public List<Apartment> getAllApartments() {

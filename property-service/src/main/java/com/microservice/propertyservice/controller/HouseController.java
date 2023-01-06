@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("/houses")
 public class HouseController {
 
+    private final HouseService houseService;
+
     @Autowired
-    private HouseService houseService;
+    public HouseController(HouseService houseService) {
+        this.houseService = houseService;
+    }
 
     @GetMapping("/all")
     public List<House> getAllHouses() {

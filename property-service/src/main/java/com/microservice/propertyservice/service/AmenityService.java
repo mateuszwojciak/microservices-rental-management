@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class AmenityService {
 
+    private final AmenityRepository amenityRepository;
+
     @Autowired
-    private AmenityRepository amenityRepository;
+    public AmenityService(AmenityRepository amenityRepository) {
+        this.amenityRepository = amenityRepository;
+    }
 
     public List<Amenity> getAllAmenities() {
         return amenityRepository.findAll();

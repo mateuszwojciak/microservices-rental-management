@@ -13,11 +13,15 @@ import java.util.List;
 @Service
 public class OfficeService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    private final OfficeRepository officeRepository;
 
     @Autowired
-    private OfficeRepository officeRepository;
+    public OfficeService(RestTemplate restTemplate, OfficeRepository officeRepository) {
+        this.restTemplate = restTemplate;
+        this.officeRepository = officeRepository;
+    }
 
     public List<Office> getAllOffices() {
         return officeRepository.findAll();

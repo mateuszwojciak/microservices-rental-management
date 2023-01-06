@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/amenities")
 public class AmenityController {
 
+    private final AmenityService amenityService;
+
     @Autowired
-    private AmenityService amenityService;
+    public AmenityController(AmenityService amenityService) {
+        this.amenityService = amenityService;
+    }
 
     @GetMapping("/all")
     public List<Amenity> getAllAmenities() {

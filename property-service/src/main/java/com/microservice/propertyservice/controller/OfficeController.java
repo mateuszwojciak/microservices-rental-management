@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("offices")
 public class OfficeController {
 
+    private final OfficeService officeService;
+
     @Autowired
-    private OfficeService officeService;
+    public OfficeController(OfficeService officeService) {
+        this.officeService = officeService;
+    }
 
     @GetMapping("/all")
     public List<Office> getAllOffices() {

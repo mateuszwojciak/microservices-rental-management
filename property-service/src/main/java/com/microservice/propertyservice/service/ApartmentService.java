@@ -13,11 +13,15 @@ import java.util.List;
 @Service
 public class ApartmentService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    private final ApartmentRepository apartmentRepository;
 
     @Autowired
-    private ApartmentRepository apartmentRepository;
+    public ApartmentService(RestTemplate restTemplate, ApartmentRepository apartmentRepository) {
+        this.restTemplate = restTemplate;
+        this.apartmentRepository = apartmentRepository;
+    }
 
     public List<Apartment> getAllApartments() {
         return apartmentRepository.findAll();

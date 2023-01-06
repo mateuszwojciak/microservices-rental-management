@@ -14,11 +14,15 @@ import java.util.List;
 public class HouseService {
 
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    private final HouseRepository houseRepository;
 
     @Autowired
-    private HouseRepository houseRepository;
+    public HouseService(RestTemplate restTemplate, HouseRepository houseRepository) {
+        this.restTemplate = restTemplate;
+        this.houseRepository = houseRepository;
+    }
 
     public List<House> getAllHouses() {
         return houseRepository.findAll();
