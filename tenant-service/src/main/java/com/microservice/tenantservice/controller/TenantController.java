@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/tenants")
 public class TenantController {
 
+    private final TenantService tenantService;
+
     @Autowired
-    private TenantService tenantService;
+    public TenantController(TenantService tenantService) {
+        this.tenantService = tenantService;
+    }
 
     @GetMapping("/all")
     public List<Tenant> getAllTenants() {
@@ -38,7 +42,7 @@ public class TenantController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTenant(@RequestBody Tenant tenant) throws InvalidInputException {
+    public void createTenant(@RequestBody Tenant tenant) {
         if (tenant.getIdentificationNumber() == null || tenant.getIdentificationNumber().toCharArray().length <= 7)
             throw new InvalidInputException("Identification number is a required field.");
 
@@ -46,7 +50,7 @@ public class TenantController {
     }
 
     @PutMapping("/edit/{id}")
-    public void updateTenant(@PathVariable("id") Long id, @RequestBody Tenant tenant) throws InvalidInputException {
+    public void updateTenant(@PathVariable("id") Long id, @RequestBody Tenant tenant) {
         tenant.setId(id);
         if (tenant.getIdentificationNumber() == null || tenant.getIdentificationNumber().toCharArray().length <= 7)
             throw new InvalidInputException("Identification number is a required field.");

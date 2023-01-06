@@ -24,7 +24,7 @@ public class OfficeController {
     }
 
     @GetMapping("/info/{id}")
-    public ResponseTemplateVO getOfficeWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
+    public ResponseTemplateVO getOfficeWithTenant(@PathVariable("id") Long id) {
         ResponseTemplateVO office = officeService.getOfficeWithTenant(id);
         if (office.getProperty() == null)
             throw new ResourceNotFoundException("Office with id " + id + " not found.");
@@ -42,7 +42,7 @@ public class OfficeController {
     }
 
     @PutMapping("/edit/{id}")
-    public void updateOffice(@PathVariable("id") Long id, @RequestBody Office office) throws InvalidInputException {
+    public void updateOffice(@PathVariable("id") Long id, @RequestBody Office office) {
         office.setId(id);
         if (office.getName() == null || office.getPeopleCapacity() == null || office.getSquareMeter() == null) {
             throw new InvalidInputException("Name, capacity and square meters are required fields.");

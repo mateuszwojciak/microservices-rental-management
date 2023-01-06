@@ -1,6 +1,5 @@
 package com.microservice.propertyservice.service;
 
-import com.microservice.propertyservice.exception.ResourceNotFoundException;
 import com.microservice.propertyservice.model.Apartment;
 import com.microservice.propertyservice.model.value_object.ResponseTemplateVO;
 import com.microservice.propertyservice.model.value_object.Tenant;

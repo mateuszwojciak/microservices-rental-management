@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
 
+    private final CompanyService companyService;
+
     @Autowired
-    private CompanyService companyService;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @GetMapping("/all")
     public List<Company> getAllTenants() {
@@ -38,7 +42,7 @@ public class CompanyController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCompany(@RequestBody Company company) throws InvalidInputException {
+    public void createCompany(@RequestBody Company company) {
         if (company.getIdentificationNumber() == null || company.getCompanyName() == null
                 || company.getIdentificationNumber().toCharArray().length <= 7)
             throw new InvalidInputException("Identification number and company name are required fields.");
@@ -47,7 +51,7 @@ public class CompanyController {
     }
 
     @PutMapping("/edit/{id}")
-    public void updateCompany(@PathVariable("id") Long id, @RequestBody Company company) throws InvalidInputException {
+    public void updateCompany(@PathVariable("id") Long id, @RequestBody Company company) {
         company.setId(id);
         if (company.getIdentificationNumber() == null || company.getCompanyName() == null
                 || company.getIdentificationNumber().toCharArray().length <= 7)

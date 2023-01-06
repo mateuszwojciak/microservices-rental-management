@@ -24,7 +24,7 @@ public class HouseController {
     }
 
     @GetMapping("/info/{id}")
-    public ResponseTemplateVO getHouseWithTenant(@PathVariable("id") Long id) throws ResourceNotFoundException {
+    public ResponseTemplateVO getHouseWithTenant(@PathVariable("id") Long id) {
         ResponseTemplateVO house = houseService.getHouseWithTenant(id);
         if (house.getProperty() == null)
             throw new ResourceNotFoundException("House with id " + id + " not found.");
@@ -34,7 +34,7 @@ public class HouseController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createHouse(@RequestBody House house) throws InvalidInputException {
+    public void createHouse(@RequestBody House house) {
         if (house.getName() == null || house.getNumberOfRooms() == null || house.getSquareMeter() == null) {
             throw new InvalidInputException("Name, number of rooms and square meters are required fields.");
         }
@@ -42,7 +42,7 @@ public class HouseController {
     }
 
     @PutMapping("/edit/{id}")
-    public void updateHouse(@PathVariable("id") Long id, @RequestBody House house) throws InvalidInputException {
+    public void updateHouse(@PathVariable("id") Long id, @RequestBody House house) {
         house.setId(id);
         if (house.getName() == null || house.getNumberOfRooms() == null || house.getSquareMeter() == null) {
             throw new InvalidInputException("Name, number of rooms and square meters are required fields.");

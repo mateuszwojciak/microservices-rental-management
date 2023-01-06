@@ -34,7 +34,7 @@ public class ApartmentController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createApartment(@RequestBody Apartment apartment) throws InvalidInputException {
+    public void createApartment(@RequestBody Apartment apartment) {
         if (apartment.getName() == null || apartment.getFloor() == null
         || apartment.getNumberOfRooms() == null || apartment.getSquareMeter() == null)
             throw new InvalidInputException("Name, floor, number of rooms and square meters are required fields.");
@@ -43,7 +43,7 @@ public class ApartmentController {
     }
 
     @PutMapping("/edit/{id}")
-    public void updateApartment(@PathVariable("id") Long id, @RequestBody Apartment apartment) throws InvalidInputException {
+    public void updateApartment(@PathVariable("id") Long id, @RequestBody Apartment apartment) {
         apartment.setId(id);
         if (apartment.getName() == null || apartment.getFloor() == null
                 || apartment.getNumberOfRooms() == null || apartment.getSquareMeter() == null)
