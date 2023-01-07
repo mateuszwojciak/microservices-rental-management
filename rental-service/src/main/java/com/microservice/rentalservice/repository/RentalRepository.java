@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface RentalRepository extends JpaRepository<Rental, Long> {
 
-    @Query(value = "SELECT r FROM rentals r WHERE r.end_date BETWEEN CURRENT_DATE and CURRENT_DATE + :numberOfDays",
+    @Query(value = "SELECT * FROM rentals WHERE end_date BETWEEN CURRENT_DATE and CURRENT_DATE + :numberOfDays",
     nativeQuery = true)
     List<Rental> getExpiringRentals(@Param("numberOfDays") Integer numberOfDates);
 }

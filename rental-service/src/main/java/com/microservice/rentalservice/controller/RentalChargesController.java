@@ -38,8 +38,10 @@ public class RentalChargesController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createRentalCharge(@RequestBody RentalCharges rentalCharges) {
-        if(rentalCharges.getRental() == null || rentalCharges.getDescription() == null
-        || rentalCharges.getAmount() == null)
+        if(rentalCharges.getRental() == null
+                || rentalCharges.getDescription() == null
+                || rentalCharges.getAmount() == null
+                || rentalCharges.getRentalId() != rentalCharges.getRental().getId())
             throw new InvalidInputException("Missing information in create request.");
 
         rentalChargesService.createRentalCharge(rentalCharges);

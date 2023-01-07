@@ -30,7 +30,7 @@ public class RentalInvoiceController {
         return rentalInvoiceService.getInvoicesForRentalId(id);
     }
 
-    @GetMapping("/dates/{startDate}-{endDate}")
+    @GetMapping("/dates/{startDate}/{endDate}")
     public List<RentalInvoice> getInvoicesBetweenDates(@PathVariable("startDate") LocalDate startDate,
                                                        @PathVariable("endDate") LocalDate endDate) {
         return rentalInvoiceService.getInvoicesBetweenDates(startDate, endDate);

@@ -11,7 +11,7 @@ public interface RentalChargesRepository extends JpaRepository<RentalCharges, Lo
 
     List<RentalCharges> findRentalChargesByDescription(String description);
 
-    @Query(value = "SELECT r FROM rental_charges r WHERE r.rental_id = :rentalId",
-    nativeQuery = true)
+    @Query(value = "SELECT * FROM rental_charges WHERE rental_id = :rentalId",
+            nativeQuery = true)
     List<RentalCharges> findRentalChargesForRentalId(@Param("rentalId") Long rentalId);
 }

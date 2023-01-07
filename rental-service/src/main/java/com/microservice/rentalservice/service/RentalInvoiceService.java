@@ -34,7 +34,7 @@ public class RentalInvoiceService {
     }
 
     public List<RentalInvoice> getAllInvoices() {
-        return rentalInvoiceRepository.findAll(Sort.by("invoice_due_date").descending());
+        return rentalInvoiceRepository.findAll(Sort.by("dueDate").descending());
     }
 
     public List<RentalInvoice> getInvoicesForRentalId(Long rentalId) {
@@ -43,8 +43,8 @@ public class RentalInvoiceService {
 
     public List<RentalInvoice> getInvoicesBetweenDates(LocalDate startDate, LocalDate endDate) {
         return rentalInvoiceRepository.findAll().stream()
-                .filter(rentalInvoice -> rentalInvoice.getInvoiceDate().isAfter(startDate) &&
-                        rentalInvoice.getInvoiceDate().isBefore(endDate))
+                .filter(rentalInvoice -> rentalInvoice.getDueDate().isAfter(startDate) &&
+                        rentalInvoice.getDueDate().isBefore(endDate))
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +57,7 @@ public class RentalInvoiceService {
                 .reduce(BigDecimal::add);
 
         RentalInvoice rentalInvoice = new RentalInvoice();
-        rentalInvoice.setRental(rental);
+        rentalInvoice.setRentalId(rental.getId());
         rentalInvoice.setInvoiceDate(invoiceDate);
         rentalInvoice.setDueDate(invoiceDate.plusDays(14));
         BigDecimal invoiceAmount = calculateFinalAmount(rental.getTotalAmount(), totalAmount.orElse(BigDecimal.ZERO));
@@ -67,8 +67,7 @@ public class RentalInvoiceService {
     }
 
     public static BigDecimal calculateFinalAmount(BigDecimal rentalAmount, BigDecimal chargesAmount) {
-        BigDecimal finalAmount = rentalAmount.add(chargesAmount);
-        return finalAmount;
+        return rentalAmount.add(chargesAmount);
     }
 
     public void deleteInvoice(Long id) {

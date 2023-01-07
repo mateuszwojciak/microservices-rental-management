@@ -1,5 +1,6 @@
 package com.microservice.rentalservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,11 @@ public class RentalCharges {
 
     @ManyToOne
     @JoinColumn(name = "rental_id")
+    @JsonBackReference
     private Rental rental;
+
+    @Column(name = "rental_reference")
+    private Long rentalId;
 
     @Column(name = "description")
     private String description;
@@ -29,9 +34,10 @@ public class RentalCharges {
     @Column(name = "charge_amount")
     private BigDecimal amount;
 
-    public RentalCharges(Long id, Rental rental, String description, BigDecimal amount) {
+    public RentalCharges(Long id, Rental rental, Long rentalId, String description, BigDecimal amount) {
         this.id = id;
         this.rental = rental;
+        this.rentalId = rentalId;
         this.description = description;
         this.amount = amount;
     }

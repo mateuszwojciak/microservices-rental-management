@@ -1,5 +1,6 @@
 package com.microservice.rentalservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rental_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "property_id")
@@ -35,12 +37,17 @@ public class Rental {
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
-    public Rental(Long id, String propertyId, String tenantId, LocalDate startDate, LocalDate endDate, BigDecimal totalAmount) {
+    @OneToMany(mappedBy = "rental")
+    @JsonManagedReference
+    private Set<RentalCharges> charges;
+
+    public Rental(Long id, String propertyId, String tenantId, LocalDate startDate, LocalDate endDate, BigDecimal totalAmount, Set<RentalCharges> charges) {
         this.id = id;
         this.propertyId = propertyId;
         this.tenantId = tenantId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalAmount = totalAmount;
+        this.charges = charges;
     }
 }

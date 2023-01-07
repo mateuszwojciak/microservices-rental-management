@@ -21,12 +21,12 @@ public class RentalService {
     }
 
     public List<Rental> getAllRentals() {
-        return rentalRepository.findAll(Sort.by("start_date").ascending());
+        return rentalRepository.findAll(Sort.by("startDate").ascending());
     }
 
     public List<Rental> getRentalsBetweenDates(LocalDate startDate, LocalDate endDate) {
         return rentalRepository.findAll().stream()
-                .filter(rental -> rental.getStartDate().isAfter(startDate) &&
+                .filter(rental -> rental.getEndDate().isAfter(startDate) &&
                                 rental.getEndDate().isBefore(endDate))
                 .collect(Collectors.toList());
     }

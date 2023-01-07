@@ -27,7 +27,7 @@ public class RentalController {
         return rentalService.getAllRentals();
     }
 
-    @GetMapping("/dates/{startDate}-{endDate}")
+    @GetMapping("/dates/{startDate}/{endDate}")
     public List<Rental> getRentalsBetweenDates(@PathVariable("startDate") LocalDate startDate,
                                                @PathVariable("endDate") LocalDate endDate) {
         return rentalService.getRentalsBetweenDates(startDate, endDate);

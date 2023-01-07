@@ -20,9 +20,8 @@ public class RentalInvoice {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "rental_id")
-    private Rental rental;
+    @Column(name = "rental_id")
+    private Long rentalId;
 
     @Column(name = "invoice_date")
     private LocalDate invoiceDate;
@@ -33,9 +32,9 @@ public class RentalInvoice {
     @Column(name = "final_amount")
     private BigDecimal amount;
 
-    public RentalInvoice(Long id, Rental rental, LocalDate invoiceDate, LocalDate dueDate, BigDecimal amount) {
+    public RentalInvoice(Long id, Long rentalId, LocalDate invoiceDate, LocalDate dueDate, BigDecimal amount) {
         this.id = id;
-        this.rental = rental;
+        this.rentalId = rentalId;
         this.invoiceDate = invoiceDate;
         this.dueDate = dueDate;
         this.amount = amount;
