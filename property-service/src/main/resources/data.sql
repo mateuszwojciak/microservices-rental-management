@@ -71,9 +71,9 @@ INSERT INTO houses (id, name, number_rooms, number_bathrooms, number_garages, pr
 (9, 'Gran Via Madrid 5', 7, 4, 2, 4000, 178, 24, 25);
 
 INSERT INTO offices (id, complex_name, name, people_capacity, price, square_meter, tenant_id, address_id) VALUES
-(1, 'com name', 'Inflancka Warsaw 1', 80, 12000, 400, 25, 18),
-(2, 'com name', 'Inflancka Warsaw 2', 90, 13000, 550, 27, 19),
-(3, 'com name', 'Inflancka Warsaw 3', 110, 15500, 880, 26, 20),
+(1, 'Varsovia A', 'Inflancka Warsaw 1', 80, 12000, 400, 25, 18),
+(2, 'Varsovia B', 'Inflancka Warsaw 2', 90, 13000, 550, 27, 19),
+(3, 'Varsovia C', 'Inflancka Warsaw 3', 110, 15500, 880, 26, 20),
 (4, 'Tech Valley A', 'Berlin Tech Build 1', 60, 4000, 420, 29, 28),
 (5, 'Tech Valley A', 'Berlin Tech Build 2', 60, 4200, 440, 28, 29),
 (6, 'Tech Valley B', 'Berlin Tech Build 3', 80, 5100, 600, 30, 30);

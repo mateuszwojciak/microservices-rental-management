@@ -1,6 +1,6 @@
 package com.microservice.rentalservice.service;
 
-import com.microservice.rentalservice.exception.RentalNotFoundException;
+import com.microservice.rentalservice.exception.ResourceNotFoundException;
 import com.microservice.rentalservice.model.Rental;
 import com.microservice.rentalservice.model.RentalCharges;
 import com.microservice.rentalservice.model.RentalInvoice;
@@ -50,7 +50,7 @@ public class RentalInvoiceService {
 
     public void createInvoice(Long rentalId, LocalDate invoiceDate) {
         Rental rental = rentalRepository.findById(rentalId).orElseThrow(() ->
-                new RentalNotFoundException("Rental id not found."));
+                new ResourceNotFoundException("Rental id not found."));
         List<RentalCharges> charges = rentalChargesRepository.findRentalChargesForRentalId(rentalId);
         Optional<BigDecimal> totalAmount = charges.stream()
                 .map(RentalCharges::getAmount)

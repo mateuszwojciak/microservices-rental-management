@@ -1,7 +1,7 @@
 package com.microservice.rentalservice.controller;
 
 import com.microservice.rentalservice.exception.InvalidInputException;
-import com.microservice.rentalservice.exception.RentalNotFoundException;
+import com.microservice.rentalservice.exception.ResourceNotFoundException;
 import com.microservice.rentalservice.model.Rental;
 import com.microservice.rentalservice.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class RentalController {
     public Rental getRentalById(@PathVariable("id") Long id) {
         Rental rental = rentalService.getRentalById(id);
         if (rental == null)
-            throw new RentalNotFoundException("Rental with id " + id + " not found.");
+            throw new ResourceNotFoundException("Rental with id " + id + " not found.");
 
         return rental;
     }
