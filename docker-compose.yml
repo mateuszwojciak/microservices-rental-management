@@ -1,0 +1,52 @@
+version: '3'
+services:
+  property-service:
+    build: ./property-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - tenant-service
+  tenant-service:
+    build: ./tenant-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - database-property
+      - database-rental
+      - database-tenant
+  rental-service:
+    build: ./rental-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - property-service
+  database-property:
+    container_name: database-property
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: MW1admin2
+      MYSQL_DATABASE: property_service
+    ports:
+      - "3307:3306"
+  database-rental:
+    container_name: database-rental
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: MW1admin2
+      MYSQL_DATABASE: rental_service
+    ports:
+      - "3308:3306"
+  database-tenant:
+    container_name: database-tenant
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: MW1admin2
+      MYSQL_DATABASE: tenant_service
+    ports:
+      - "3309:3306"
