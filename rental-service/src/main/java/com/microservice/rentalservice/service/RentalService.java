@@ -1,5 +1,7 @@
 package com.microservice.rentalservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.microservice.rentalservice.kafka.KafkaProducer;
 import com.microservice.rentalservice.model.Rental;
 import com.microservice.rentalservice.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ import java.util.stream.Collectors;
 public class RentalService {
 
     private final RentalRepository rentalRepository;
+    private final KafkaProducer kafkaProducer;
 
     @Autowired
-    public RentalService(RentalRepository rentalRepository) {
+    public RentalService(RentalRepository rentalRepository, KafkaProducer kafkaProducer) {
         this.rentalRepository = rentalRepository;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public List<Rental> getAllRentals() {
@@ -39,15 +43,19 @@ public class RentalService {
         return rentalRepository.findById(id).orElse(null);
     }
 
-    public void createRental(Rental rental) {
+    public void createRental(Rental rental) throws JsonProcessingException {
         rentalRepository.save(rental);
+        kafkaProducer.sendMessageCreateRental(rental);
     }
 
-    public void updateRental(Rental rental) {
+    public void updateRental(Rental rental) throws JsonProcessingException {
         rentalRepository.save(rental);
+        kafkaProducer.sendMessageUpdateRental(rental);
     }
 
-    public void deleteRental(Long id) {
+    public void deleteRental(Long id) throws JsonProcessingException {
+        Rental rental = rentalRepository.findById(id).orElse(null);
+        kafkaProducer.sendMessageDeleteRental(rental);
         rentalRepository.deleteById(id);
     }
 }

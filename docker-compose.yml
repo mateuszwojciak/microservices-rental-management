@@ -1,5 +1,50 @@
 version: '3'
+networks:
+  kafka-net:
+    driver: bridge
+
 services:
+  zookeeper:
+    image: zookeeper:3.8.0
+    container_name: zookeeper
+    restart: "no"
+    networks:
+      - kafka-net
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: obsidiandynamics/kafka
+    container_name: kafka
+    restart: "no"
+    networks:
+      - kafka-net
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER_INTERNAL:PLAINTEXT,DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER_INTERNAL://:29092,DOCKER_EXTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: DOCKER_INTERNAL://kafka:29092,DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    restart: "no"
+    networks:
+      - kafka-net
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:29092"
+    depends_on:
+      - "kafka"
+
   property-service:
     build: ./property-service
     ports:
@@ -8,45 +53,22 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - tenant-service
+
   tenant-service:
     build: ./tenant-service
     ports:
       - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - database-property
-      - database-rental
-      - database-tenant
+
   rental-service:
     build: ./rental-service
     ports:
       - "8083:8083"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - kafka-net
     depends_on:
       - property-service
-  database-property:
-    container_name: database-property
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: MW1admin2
-      MYSQL_DATABASE: property_service
-    ports:
-      - "3307:3306"
-  database-rental:
-    container_name: database-rental
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: MW1admin2
-      MYSQL_DATABASE: rental_service
-    ports:
-      - "3308:3306"
-  database-tenant:
-    container_name: database-tenant
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: MW1admin2
-      MYSQL_DATABASE: tenant_service
-    ports:
-      - "3309:3306"
+      - kafka

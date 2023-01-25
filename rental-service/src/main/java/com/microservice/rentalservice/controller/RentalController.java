@@ -1,5 +1,6 @@
 package com.microservice.rentalservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.microservice.rentalservice.exception.InvalidInputException;
 import com.microservice.rentalservice.exception.ResourceNotFoundException;
 import com.microservice.rentalservice.model.Rental;
@@ -49,7 +50,7 @@ public class RentalController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createRental(@RequestBody Rental rental) {
+    public void createRental(@RequestBody Rental rental) throws JsonProcessingException {
         if(rental.getTenantId() == null || rental.getPropertyId() == null
         || rental.getStartDate() == null || rental.getTotalAmount() == null)
             throw new InvalidInputException("Missing information in create request.");
@@ -58,7 +59,7 @@ public class RentalController {
     }
 
     @PutMapping("/edit/{id}")
-    public void updateRental(@PathVariable("id") Long id, @RequestBody Rental rental) {
+    public void updateRental(@PathVariable("id") Long id, @RequestBody Rental rental) throws JsonProcessingException {
         if(rental.getTenantId() == null || rental.getPropertyId() == null
                 || rental.getStartDate() == null || rental.getTotalAmount() == null)
             throw new InvalidInputException("Missing information in update request.");
@@ -68,7 +69,7 @@ public class RentalController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRental(@PathVariable("id") Long id) {
+    public void deleteRental(@PathVariable("id") Long id) throws JsonProcessingException {
         rentalService.deleteRental(id);
     }
 }
