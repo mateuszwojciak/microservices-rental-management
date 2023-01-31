@@ -41,7 +41,11 @@ public class Rental {
     @JsonManagedReference
     private Set<RentalCharges> charges;
 
-    public Rental(Long id, Long propertyId, Long tenantId, LocalDate startDate, LocalDate endDate, BigDecimal totalAmount, Set<RentalCharges> charges) {
+    @Column(name = "property_type")
+    @Enumerated(EnumType.STRING)
+    private PropertyType propertyType;
+
+    public Rental(Long id, Long propertyId, Long tenantId, LocalDate startDate, LocalDate endDate, BigDecimal totalAmount, Set<RentalCharges> charges, PropertyType propertyType) {
         this.id = id;
         this.propertyId = propertyId;
         this.tenantId = tenantId;
@@ -49,5 +53,6 @@ public class Rental {
         this.endDate = endDate;
         this.totalAmount = totalAmount;
         this.charges = charges;
+        this.propertyType = propertyType;
     }
 }

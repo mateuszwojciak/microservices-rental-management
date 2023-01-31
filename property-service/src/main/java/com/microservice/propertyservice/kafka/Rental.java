@@ -1,4 +1,4 @@
-package com.microservice.tenantservice.kafka;
+package com.microservice.propertyservice.kafka;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

@@ -31,6 +31,10 @@ public class OfficeService {
         officeRepository.save(office);
     }
 
+    public Office getOfficeById(Long officeId) {
+        return officeRepository.findById(officeId).orElse(null);
+    }
+
     public ResponseTemplateVO getOfficeWithTenant(Long officeId) {
         Office office = officeRepository.findById(officeId).orElse(null);
         ResponseTemplateVO vo = new ResponseTemplateVO();

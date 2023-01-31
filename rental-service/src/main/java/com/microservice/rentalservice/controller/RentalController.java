@@ -51,7 +51,7 @@ public class RentalController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createRental(@RequestBody Rental rental) throws JsonProcessingException {
-        if(rental.getTenantId() == null || rental.getPropertyId() == null
+        if(rental.getTenantId() == null || rental.getPropertyId() == null || rental.getPropertyType() == null
         || rental.getStartDate() == null || rental.getTotalAmount() == null)
             throw new InvalidInputException("Missing information in create request.");
 

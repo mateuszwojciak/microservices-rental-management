@@ -32,6 +32,10 @@ public class HouseService {
         houseRepository.save(house);
     }
 
+    public House getHouseById(Long houseId) {
+        return houseRepository.findById(houseId).orElse(null);
+    }
+
     public ResponseTemplateVO getHouseWithTenant(Long houseId) {
         House house = houseRepository.findById(houseId).orElse(null);
         ResponseTemplateVO vo = new ResponseTemplateVO();

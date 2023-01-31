@@ -31,6 +31,10 @@ public class ApartmentService {
         apartmentRepository.save(apartment);
     }
 
+    public Apartment getApartmentById(Long apartmentId) {
+        return apartmentRepository.findById(apartmentId).orElse(null);
+    }
+
     public ResponseTemplateVO getApartmentWithTenant(Long apartmentId) {
         Apartment apartment = apartmentRepository.findById(apartmentId).orElse(null);
         ResponseTemplateVO vo = new ResponseTemplateVO();
