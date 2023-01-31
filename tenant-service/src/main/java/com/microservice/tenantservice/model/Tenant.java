@@ -33,9 +33,9 @@ public class Tenant {
     private String phone;
 
     @Column(name = "rent_agreement_id")
-    private String rentAgreementId;
+    private Long rentAgreementId;
 
-    public Tenant(Long id, String identificationNumber, String firstName, String lastName, String email, String phone, String rentAgreementId) {
+    public Tenant(Long id, String identificationNumber, String firstName, String lastName, String email, String phone, Long rentAgreementId) {
         this.id = id;
         this.identificationNumber = identificationNumber;
         this.firstName = firstName;

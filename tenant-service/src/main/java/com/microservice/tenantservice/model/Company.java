@@ -21,7 +21,7 @@ public class Company extends Tenant {
     @Column(name = "tax_id")
     private String taxId;
 
-    public Company(Long id, String identificationNumber, String firstName, String lastName, String email, String phone, String rentAgreementId, String companyName, String legalForm, String taxId) {
+    public Company(Long id, String identificationNumber, String firstName, String lastName, String email, String phone, Long rentAgreementId, String companyName, String legalForm, String taxId) {
         super(id, identificationNumber, firstName, lastName, email, phone, rentAgreementId);
         this.companyName = companyName;
         this.legalForm = legalForm;

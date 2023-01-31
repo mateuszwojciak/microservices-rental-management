@@ -23,10 +23,10 @@ public class Rental {
     private Long id;
 
     @Column(name = "property_id")
-    private String propertyId;
+    private Long propertyId;
 
     @Column(name = "tenant_id")
-    private String tenantId;
+    private Long tenantId;
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -41,7 +41,7 @@ public class Rental {
     @JsonManagedReference
     private Set<RentalCharges> charges;
 
-    public Rental(Long id, String propertyId, String tenantId, LocalDate startDate, LocalDate endDate, BigDecimal totalAmount, Set<RentalCharges> charges) {
+    public Rental(Long id, Long propertyId, Long tenantId, LocalDate startDate, LocalDate endDate, BigDecimal totalAmount, Set<RentalCharges> charges) {
         this.id = id;
         this.propertyId = propertyId;
         this.tenantId = tenantId;
