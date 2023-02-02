@@ -3,6 +3,7 @@ package com.microservice.tenantservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
